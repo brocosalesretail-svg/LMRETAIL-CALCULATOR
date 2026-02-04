@@ -3,256 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeichtMix Pro Estimator v6.0</title>
+    <title>LeichtMix Pro System v6.0 - Rudi Philipus</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* LICENSE: EXCLUSIVE TO RUDI PHILIPUS
+           BASE ENGINE: LEICHTMIX ESTIMATOR V6.0 (STABLE)
+        */
         :root {
             --primary: #002d5a; --secondary: #0ea5e9; --accent: #e11d48; 
             --bg: #f8fafc; --card-bg: #ffffff; --text: #334155; --border: #cbd5e1;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        
-        /* HEADER PREMIUM */
+        body { background-color: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            width: 280px; background: linear-gradient(180deg, #002d5a 0%, #001a35 100%);
+            color: white; padding: 30px 20px; display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .sidebar-brand { font-size: 1.4rem; font-weight: 800; margin-bottom: 40px; border-left: 4px solid var(--accent); padding-left: 15px; }
+        .nav-item { color: #cbd5e1; text-decoration: none; padding: 12px 15px; border-radius: 8px; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; display: block; }
+        .nav-item.active { background: rgba(255,255,255,0.1); color: white; border-right: 4px solid var(--accent); }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+
+        /* MAIN AREA */
+        .main-wrapper { flex-grow: 1; padding: 25px; overflow-y: auto; }
         header {
-            grid-column: 1 / -1; background: white; padding: 20px 30px; border-radius: 12px;
+            background: white; padding: 20px 30px; border-radius: 12px;
             border-bottom: 5px solid var(--primary); display: flex; justify-content: space-between; 
-            align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 10px;
+            align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;
         }
         .logo-group { display: flex; align-items: center; gap: 15px; }
-        .logo-group img { height: 26px; width: auto; }
+        .logo-group img { height: 26px; }
         .divider { width: 1px; height: 25px; background: #e2e8f0; }
-        .header-title { text-align: right; }
-        .header-title h1 { color: var(--primary); font-size: 1.2rem; font-weight: 900; letter-spacing: -0.5px; }
-        .header-title p { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 2px; }
 
-        /* INPUT CARD */
+        /* GRID CALCULATOR */
+        .app-grid { display: grid; grid-template-columns: 1fr 400px; gap: 25px; }
         .card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        h2 { font-size: 0.9rem; margin-bottom: 20px; color: var(--primary); font-weight: 800; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 12px; letter-spacing: 0.5px; }
-        
+        h2 { font-size: 0.9rem; margin-bottom: 20px; color: var(--primary); font-weight: 800; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 12px; }
+
+        /* INPUTS */
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.8rem; color: #475569; }
-        input, select { 
-            width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; 
-            font-size: 0.9rem; background: #f8fafc; transition: 0.2s; color: #0f172a; font-weight: 500;
-        }
-        input:focus, select:focus { border-color: var(--primary); background: white; outline: none; }
-        input[readonly] { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
-        .input-row { display: flex; gap: 15px; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem; background: #f8fafc; font-weight: 600; color: #0f172a; }
+        input:focus { border-color: var(--primary); outline: none; background: white; }
 
-        /* PRODUCT INFO BOX */
-        .info-box { 
-            background: #eff6ff; border-radius: 8px; padding: 12px 15px; margin-top: 10px; 
-            font-size: 0.8rem; color: #1e40af; border: 1px solid #dbeafe; line-height: 1.5; 
-            display: flex; align-items: start; gap: 8px;
-        }
-        .info-icon { font-size: 1.1rem; }
+        /* INFO & RESULTS */
+        .info-box { background: #eff6ff; border-radius: 8px; padding: 12px; margin-top: 10px; font-size: 0.8rem; color: #1e40af; border: 1px solid #dbeafe; line-height: 1.4; display: flex; gap: 10px; }
+        .res-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+        .res-row b { color: #0f172a; }
 
-        /* RESULT STYLES */
-        .res-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; align-items: center; }
-        .res-row span { color: #64748b; font-weight: 500; }
-        .res-row b { color: #0f172a; font-weight: 700; text-align: right; }
-        
-        /* RECOMMENDATION BOX */
-        .rec-box {
-            background: #fff7ed; color: #9a3412; padding: 12px; border-radius: 8px; margin-top: 15px; 
-            font-size: 0.85rem; border: 1px dashed #fdba74; display: none; align-items: center; gap: 10px;
-        }
-
-        /* BLUE TOTAL BOX */
+        /* TOTAL BOX V6 STYLE */
         .total-box { 
             background: linear-gradient(145deg, #002d5a 0%, #004b93 100%);
-            color: white; border-radius: 16px; padding: 25px; margin-top: 25px; 
-            text-align: center; position: relative; border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 10px 25px -5px rgba(0, 45, 90, 0.4);
+            color: white; border-radius: 16px; padding: 25px; margin-top: 25px; text-align: center;
         }
-        .total-label { font-size: 0.75rem; font-weight: 700; opacity: 0.9; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px; }
         .num-group { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin-bottom: 15px; }
         .num { font-size: 4rem; font-weight: 900; line-height: 1; }
         .unit { font-size: 1.2rem; font-weight: 700; color: #7dd3fc; }
-        .weight-strip { 
-            border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; 
-            display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;
-        }
+        .weight-strip { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; }
 
-        /* CREDIT STYLE (DASHBOARD ONLY) */
-        .dashboard-credit {
-            grid-column: 1 / -1; text-align: center; padding: 20px; margin-top: 10px;
-            border-top: 1px dashed var(--border);
-        }
-        .credit-text { font-size: 0.75rem; color: #94a3b8; font-weight: 600; letter-spacing: 1px; }
-        .credit-text b { color: var(--primary); background: #f1f5f9; padding: 3px 8px; border-radius: 4px; }
+        .btn-print { width: 100%; margin-top: 20px; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-print:hover { background: #be123c; }
 
-        .btn-print {
-            width: 100%; margin-top: 20px; padding: 15px; background: var(--accent); color: white;
-            border: none; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s;
-        }
+        /* CREDIT */
+        .credit-footer { grid-column: 1 / -1; text-align: center; padding: 20px; color: #94a3b8; font-size: 0.75rem; font-weight: 700; }
+        .credit-footer b { color: var(--primary); background: #e2e8f0; padding: 3px 8px; border-radius: 4px; }
 
         @media print {
-            body { padding: 0; background: white; }
             .no-print { display: none !important; }
-            .container { display: block; }
+            body { display: block; background: white; }
+            .main-wrapper { padding: 0; }
+            .app-grid { display: block; }
             .card { border: 1px solid #ddd; box-shadow: none; margin-top: 20px; page-break-inside: avoid; }
-            header { border-bottom: 2px solid #002d5a; padding: 10px 0; }
-            .logo-group img { height: 22px; }
-            .total-box { background: #002d5a !important; -webkit-print-color-adjust: exact; box-shadow: none; }
+            .total-box { background: #002d5a !important; -webkit-print-color-adjust: exact; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-    <header>
-        <div class="logo-group">
-            <img src="logo.png" alt="Broco">
-            <div class="divider"></div>
-            <img src="leichtmix-logo.jpg" alt="LeichtMix">
-            <div class="divider"></div>
-            <img src="leichtbric-logo.jpg" alt="LeichtBric">
+    <aside class="sidebar no-print">
+        <div class="sidebar-brand">LM PRO SYSTEM</div>
+        <nav>
+            <a href="#" class="nav-item active">🏠 Dashboard Estimator</a>
+            <a href="#" class="nav-item">📋 Katalog Produk</a>
+            <a href="#" class="nav-item">📂 Riwayat Proyek</a>
+            <a href="#" class="nav-item">⚙️ Pengaturan</a>
+        </nav>
+        <div style="margin-top: auto; font-size: 0.65rem; opacity: 0.5;">
+            Premium Build v6.0.4
         </div>
-        <div class="header-title">
-            <h1>MORTAR ESTIMATOR</h1>
-            <p id="date-display"></p>
+    </aside>
+
+    <div class="main-wrapper">
+        <header>
+            <div class="logo-group">
+                <img src="logo.png" alt="Broco">
+                <div class="divider"></div>
+                <img src="leichtmix-logo.jpg" alt="LeichtMix">
+            </div>
+            <div style="text-align: right;">
+                <h1 style="color: var(--primary); font-size: 1.2rem; font-weight: 900;">MORTAR ESTIMATOR</h1>
+                <p id="date-display" style="font-size: 0.75rem; color: #64748b; font-weight: 600;"></p>
+            </div>
+        </header>
+
+        <div class="app-grid">
+            <section class="card no-print">
+                <h2>1. Data Pengukuran</h2>
+                <div class="form-group">
+                    <label>Nama Proyek / Ruangan</label>
+                    <input type="text" id="proj_name" placeholder="Contoh: Dinding Luar" oninput="updateProjName()">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex:1"><label>Panjang (m)</label><input type="number" id="p" step="0.01" oninput="calc()"></div>
+                    <div style="flex:1"><label>Lebar / Tinggi (m)</label><input type="number" id="l" step="0.01" oninput="calc()"></div>
+                </div>
+                <div class="form-group" style="margin-top:15px">
+                    <label>Jumlah Sisi Bidang</label>
+                    <input type="number" id="sisi" value="1" min="1" oninput="calc()">
+                    <small id="sisi-note" style="color:var(--accent); display:none; font-size:0.7rem;">*Terkunci otomatis untuk Thinbed</small>
+                </div>
+
+                <h2 style="margin-top:25px">2. Pemilihan Produk</h2>
+                <div class="form-group">
+                    <label>Pilih Produk LeichtMix</label>
+                    <select id="prod" onchange="changeProduct()">
+                        <optgroup label="PEREKAT BATA (THINBED)">
+                            <option value="LM301">LM 301 - Thinbed Premium (40kg)</option>
+                            <option value="LM306">LM 306 - Thinbed Standard (40kg)</option>
+                        </optgroup>
+                        <optgroup label="DINDING (PLESTER & ACIAN)">
+                            <option value="LM101">LM 101 - Base Plaster (40kg)</option>
+                            <option value="LM110">LM 110 - Render AAC (40kg)</option>
+                            <option value="LM104">LM 104 - Trasram Waterproof (40kg)</option>
+                            <option value="LM200">LM 200 - Acian Abu (40kg)</option>
+                            <option value="LM201">LM 201 - Acian Grey Beton (40kg)</option>
+                            <option value="LM202">LM 202 - Acian Putih (25kg)</option>
+                        </optgroup>
+                        <optgroup label="LANTAI (FLOORING)">
+                            <option value="LM701">LM 701 - Floor Screed (40kg)</option>
+                            <option value="LM1200">LM 1200 - Self Leveling (25kg)</option>
+                            <option value="LM1000">LM 1000 - Floor Hardener (25kg)</option>
+                        </optgroup>
+                        <optgroup label="PEREKAT KERAMIK & GRANIT">
+                            <option value="LM601">LM 601 - Tile Adhesive (25kg)</option>
+                            <option value="LM603">LM 603 - Granite Adhesive (40kg)</option>
+                            <option value="LM606">LM 606 - Tile on Tile (25kg)</option>
+                            <option value="LM608">LM 608 - Fast Set Adhesive (25kg)</option>
+                        </optgroup>
+                        <optgroup label="LAINNYA">
+                            <option value="LM801">LM 801 - Tile Grout / Nat (1kg)</option>
+                            <option value="LM1100">LM 1100 - Repair Mortar (25kg)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div id="field-tebal" class="form-group" style="display:none">
+                    <label>Rencana Ketebalan (mm)</label>
+                    <input type="number" id="tebal_val" oninput="calc()">
+                </div>
+                <div id="field-bata" class="form-group" style="display:none">
+                    <label>Tebal Bata Ringan (cm)</label>
+                    <select id="bata_type" onchange="calc()">
+                        <option value="10">Tebal 10 cm</option>
+                        <option value="7.5">Tebal 7.5 cm</option>
+                    </select>
+                </div>
+                <div id="field-tile" class="form-group" style="display:none">
+                    <label>Ukuran Keramik / Granit (cm)</label>
+                    <select id="tile_size" onchange="calc()">
+                        <option value="20x20">20x20</option>
+                        <option value="30x30" selected>30x30</option>
+                        <option value="40x40">40x40</option>
+                        <option value="60x60">60x60</option>
+                        <option value="80x80">80x80</option>
+                    </select>
+                </div>
+
+                <div class="info-box">
+                    <span>ℹ️</span>
+                    <span id="prod-desc">Deskripsi produk muncul di sini.</span>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2 id="out-header">Hasil Perhitungan</h2>
+                <div class="res-row"><span>Produk Terpilih</span><b id="res-name">-</b></div>
+                <div class="res-row"><span>Luas Bidang</span><b id="res-area">0 m²</b></div>
+                <div class="res-row"><span>Keterangan Teknis</span><b id="res-thick">-</b></div>
+                <div class="res-row"><span>Daya Sebar</span><b id="res-rate">0 kg/m²</b></div>
+                
+                <div class="total-box">
+                    <span style="font-size:0.7rem; font-weight:700; letter-spacing:2px; opacity:0.8;">KEBUTUHAN ORDER (+10% WASTE)</span>
+                    <div class="num-group">
+                        <span class="num" id="res-sak">0</span>
+                        <span class="unit" id="res-unit">SAK</span>
+                    </div>
+                    <div class="weight-strip">
+                        <span>Kemasan: <span id="res-pack">-</span></span>
+                        <span>Total: <span id="res-kg">0</span> kg</span>
+                    </div>
+                </div>
+
+                <button class="btn-print no-print" onclick="window.print()">DOWNLOAD PDF / CETAK</button>
+                <div class="no-print" style="text-align:center; font-size:0.6rem; color:#94a3b8; margin-top:15px;">
+                    Sistem Estimasi Otomatis LeichtMix Pro v6.0
+                </div>
+            </section>
+
+            <footer class="credit-footer no-print">
+                LICENSED BY: <b>RUDI PHILIPUS</b>
+            </footer>
         </div>
-    </header>
-
-    <div class="container">
-        <section class="card no-print">
-            <h2>1. Data Pengukuran</h2>
-            <div class="form-group">
-                <label>Nama Proyek / Ruangan</label>
-                <input type="text" id="proj_name" placeholder="Contoh: Dinding Luar Gudang" oninput="updateProjName()">
-            </div>
-            <div class="input-row">
-                <div style="flex:1"><label>Panjang (m)</label><input type="number" id="p" step="0.01" oninput="calc()"></div>
-                <div style="flex:1"><label>Lebar / Tinggi (m)</label><input type="number" id="l" step="0.01" oninput="calc()"></div>
-            </div>
-            <div class="form-group" style="margin-top:15px">
-                <label>Jumlah Sisi Bidang</label>
-                <input type="number" id="sisi" value="1" min="1" oninput="calc()">
-                <small id="sisi-note" style="color:#e11d48; font-size:0.7rem; display:none; margin-top:5px;">*Terkunci otomatis untuk Thinbed</small>
-            </div>
-
-            <h2 style="margin-top:25px">2. Pemilihan Produk</h2>
-            <div class="form-group">
-                <label>Kategori & Produk</label>
-                <select id="prod" onchange="changeProduct()">
-                    <optgroup label="PEREKAT BATA (THINBED)">
-                        <option value="LM301">LM 301 - Thinbed Premium (40kg)</option>
-                        <option value="LM306">LM 306 - Thinbed Standard (40kg)</option>
-                    </optgroup>
-                    <optgroup label="DINDING (PLESTER & ACIAN)">
-                        <option value="LM101">LM 101 - Base Plaster (40kg)</option>
-                        <option value="LM110">LM 110 - Render AAC (40kg)</option>
-                        <option value="LM104">LM 104 - Trasram Waterproof (40kg)</option>
-                        <option value="LM200">LM 200 - Acian Abu (40kg)</option>
-                        <option value="LM201">LM 201 - Acian Grey Beton (40kg)</option>
-                        <option value="LM202">LM 202 - Acian Putih (25kg)</option>
-                    </optgroup>
-                    <optgroup label="LANTAI (FLOORING)">
-                        <option value="LM701">LM 701 - Floor Screed (40kg)</option>
-                        <option value="LM1200">LM 1200 - Self Leveling (25kg)</option>
-                        <option value="LM1000">LM 1000 - Floor Hardener (25kg)</option>
-                    </optgroup>
-                    <optgroup label="PEREKAT KERAMIK & GRANIT">
-                        <option value="LM601">LM 601 - Tile Adhesive (25kg)</option>
-                        <option value="LM603">LM 603 - Granite Adhesive (40kg)</option>
-                        <option value="LM606">LM 606 - Tile on Tile (25kg)</option>
-                        <option value="LM608">LM 608 - Fast Set Adhesive (25kg)</option>
-                    </optgroup>
-                    <optgroup label="LAINNYA">
-                        <option value="LM801">LM 801 - Tile Grout / Nat (1kg)</option>
-                        <option value="LM1100">LM 1100 - Repair Mortar (25kg)</option>
-                    </optgroup>
-                </select>
-                <div id="prod-info" class="info-box">
-                    <span class="info-icon">ℹ️</span>
-                    <span id="prod-desc">Keterangan produk akan muncul di sini.</span>
-                </div>
-            </div>
-
-            <div id="field-tebal" class="form-group" style="display:none">
-                <label>Rencana Ketebalan (mm)</label>
-                <input type="number" id="tebal_val" step="1" oninput="calc()">
-            </div>
-
-            <div id="field-tile" class="form-group" style="display:none">
-                <label>Ukuran Keramik / Granit (cm)</label>
-                <select id="tile_size" onchange="calc()">
-                    <option value="20x20">20 x 20</option>
-                    <option value="30x30" selected>30 x 30</option>
-                    <option value="40x40">40 x 40</option>
-                    <option value="50x50">50 x 50</option>
-                    <option value="60x60">60 x 60</option>
-                    <option value="80x80">80 x 80</option>
-                    <option value="100x100">100 x 100</option>
-                </select>
-            </div>
-
-            <div id="field-bata" class="form-group" style="display:none">
-                <label>Ukuran Bata Ringan (AAC)</label>
-                <select id="bata_type" onchange="calc()">
-                    <option value="10">Tebal 10 cm</option>
-                    <option value="7.5">Tebal 7.5 cm</option>
-                </select>
-            </div>
-        </section>
-
-        <section class="card">
-            <h2 id="out-header">Hasil Perhitungan</h2>
-            <div class="res-row"><span>Produk Terpilih</span><b id="res-name">-</b></div>
-            <div class="res-row"><span>Luas Bidang Kerja</span><b id="res-area">0 m²</b></div>
-            <div class="res-row"><span>Spesifikasi / Tebal</span><b id="res-thick">-</b></div>
-            <div class="res-row"><span>Daya Sebar (Rate)</span><b id="res-rate">0 kg/m²</b></div>
-            
-            <div id="rec-box" class="rec-box">
-                <span style="font-size:1.5rem">🛠️</span>
-                <div><b>Rekomendasi Alat:</b><br><span id="res-trowel">-</span></div>
-            </div>
-
-            <div class="total-box">
-                <span class="total-label">KEBUTUHAN ORDER (+10% WASTE)</span>
-                <div class="num-group">
-                    <span class="num" id="res-sak">0</span>
-                    <span class="unit" id="res-unit">SAK</span>
-                </div>
-                <div class="weight-strip">
-                    <span>Kemasan: <span id="res-pack">-</span></span>
-                    <span>Total Berat: <span id="res-kg">0</span> kg</span>
-                </div>
-            </div>
-
-            <div style="margin-top:20px; font-size:0.7rem; color:#94a3b8; text-align:center;">
-                Dokumen ini adalah estimasi teknis komputerisasi.<br>
-                Kebutuhan aktual dapat bervariasi tergantung kondisi lapangan.
-            </div>
-
-            <button class="btn-print no-print" onclick="window.print()">CETAK / SIMPAN PDF</button>
-        </section>
-
-        <footer class="dashboard-credit no-print">
-            <div class="credit-text">
-                ESTIMATOR SYSTEM BY: <b>RUDI PHILIPUS</b>
-            </div>
-        </footer>
     </div>
 
     <script>
+        // DATABASE ASLI VERSI 6 (TIDAK DIRUBAH)
         const db = {
-            'LM301': { n: 'Thinbed Premium', cat: 'tb', w: 40, desc: 'Perekat bata ringan AAC kualitas tinggi. Daya rekat kuat & irit.' },
-            'LM306': { n: 'Thinbed Standard', cat: 'tb', w: 40, desc: 'Perekat bata ringan AAC ekonomis untuk proyek standar.' },
-            'LM101': { n: 'Base Plaster', cat: 'dens', w: 40, d: 1.6, t: 10, desc: 'Plesteran bata merah/batako. Tebal anjuran 10mm.' },
-            'LM110': { n: 'Render AAC', cat: 'dens', w: 40, d: 1.5, t: 6, desc: 'Plesteran tipis khusus bata ringan (Render). Tebal 5-8mm.' },
+            'LM301': { n: 'Thinbed Premium', cat: 'tb', w: 40, desc: 'Perekat bata ringan AAC premium. Daya rekat sangat tinggi.' },
+            'LM306': { n: 'Thinbed Standard', cat: 'tb', w: 40, desc: 'Perekat bata ringan ekonomis untuk proyek massal.' },
+            'LM101': { n: 'Base Plaster', cat: 'dens', w: 40, d: 1.6, t: 10, desc: 'Plesteran bata merah. Tebal standar 10mm.' },
+            'LM110': { n: 'Render AAC', cat: 'dens', w: 40, d: 1.5, t: 6, desc: 'Plesteran tipis khusus bata ringan.' },
             'LM104': { n: 'Trasram Waterproof', cat: 'dens', w: 40, d: 1.6, t: 10, desc: 'Plesteran kedap air untuk area basah.' },
-            'LM200': { n: 'Acian Abu', cat: 'dens', w: 40, d: 1.25, t: 2, desc: 'Acian halus warna abu untuk plesteran. Tebal 2-3mm.' },
-            'LM201': { n: 'Acian Grey Beton', cat: 'dens', w: 40, d: 1.25, t: 2, desc: 'Acian daya rekat tinggi untuk beton.' },
-            'LM202': { n: 'Acian Putih', cat: 'dens', w: 25, d: 1.2, t: 2, desc: 'Acian finish putih halus premium. Tebal 1.5-2mm.' },
-            'LM701': { n: 'Floor Screed', cat: 'dens', w: 40, d: 1.9, t: 20, desc: 'Perata lantai siap pakai. Tebal min 20mm.' },
-            'LM1200': { n: 'Self Leveling', cat: 'dens', w: 25, d: 1.25, t: 3, desc: 'Mortar cair perata lantai. Tebal 2-5mm.' },
-            'LM1000': { n: 'Floor Hardener', cat: 'fixed', w: 25, r: 5, desc: 'Bubuk pengeras permukaan lantai beton.' },
-            'LM601': { n: 'Tile Adhesive', cat: 'tile', w: 25, desc: 'Perekat keramik standar indoor area kering.' },
-            'LM603': { n: 'Granite Adhesive', cat: 'tile', w: 40, desc: 'Perekat Granit/HT Heavy Duty.' },
-            'LM606': { n: 'Tile on Tile', cat: 'tile', w: 25, desc: 'Perekat keramik di atas keramik lama.' },
+            'LM200': { n: 'Acian Abu', cat: 'dens', w: 40, d: 1.25, t: 2, desc: 'Acian halus warna abu.' },
+            'LM201': { n: 'Acian Grey Beton', cat: 'dens', w: 40, d: 1.25, t: 2, desc: 'Acian khusus permukaan beton.' },
+            'LM202': { n: 'Acian Putih', cat: 'dens', w: 25, d: 1.2, t: 2, desc: 'Acian putih premium.' },
+            'LM701': { n: 'Floor Screed', cat: 'dens', w: 40, d: 1.9, t: 20, desc: 'Perata lantai siap pakai.' },
+            'LM1200': { n: 'Self Leveling', cat: 'dens', w: 25, d: 1.25, t: 3, desc: 'Perata lantai cair otomatis.' },
+            'LM1000': { n: 'Floor Hardener', cat: 'fixed', w: 25, r: 5, desc: 'Pengeras lantai beton sistem tabur.' },
+            'LM601': { n: 'Tile Adhesive', cat: 'tile', w: 25, desc: 'Perekat keramik standar.' },
+            'LM603': { n: 'Granite Adhesive', cat: 'tile', w: 40, desc: 'Perekat Granit/HT daya rekat kuat.' },
+            'LM606': { n: 'Tile on Tile', cat: 'tile', w: 25, desc: 'Perekat keramik tanpa bongkar.' },
             'LM608': { n: 'Fast Set Adhesive', cat: 'tile', w: 25, desc: 'Perekat keramik cepat kering.' },
             'LM801': { n: 'Tile Grout (Nat)', cat: 'nat', w: 1, desc: 'Pengisi nat keramik anti jamur.' },
             'LM1100': { n: 'Repair Mortar', cat: 'dens', w: 25, d: 1.6, t: 10, desc: 'Perbaikan beton keropos.' }
@@ -262,14 +244,19 @@
             const id = document.getElementById('prod').value;
             const p = db[id];
             document.getElementById('prod-desc').innerText = p.desc;
+
+            // Kontrol Input Dinamis
             document.getElementById('field-tebal').style.display = (p.cat === 'dens') ? 'block' : 'none';
             if(p.cat === 'dens') document.getElementById('tebal_val').value = p.t;
-            document.getElementById('field-tile').style.display = (p.cat === 'tile' || p.cat === 'nat') ? 'block' : 'none';
+            
             document.getElementById('field-bata').style.display = (p.cat === 'tb') ? 'block' : 'none';
-            document.getElementById('rec-box').style.display = (p.cat === 'tile') ? 'flex' : 'none';
+            document.getElementById('field-tile').style.display = (p.cat === 'tile' || p.cat === 'nat') ? 'block' : 'none';
+
+            // Logika Sisi Thinbed
             const sI = document.getElementById('sisi');
             if(p.cat === 'tb') { sI.value = 1; sI.readOnly = true; document.getElementById('sisi-note').style.display = 'block'; }
             else { sI.readOnly = false; document.getElementById('sisi-note').style.display = 'none'; }
+            
             calc();
         }
 
@@ -278,27 +265,30 @@
         }
 
         function calc() {
-            const area = (parseFloat(document.getElementById('p').value) || 0) * (parseFloat(document.getElementById('l').value) || 0) * (parseFloat(document.getElementById('sisi').value) || 1);
+            const P = parseFloat(document.getElementById('p').value) || 0;
+            const L = parseFloat(document.getElementById('l').value) || 0;
+            const S = parseFloat(document.getElementById('sisi').value) || 1;
+            const area = P * L * S;
             const p = db[document.getElementById('prod').value];
-            let rate = 0, thickStr = "-", trowel = "-";
+            
+            let rate = 0, thickStr = "-";
 
             if (p.cat === 'dens') {
                 const t = parseFloat(document.getElementById('tebal_val').value) || 0;
-                rate = t * p.d;
-                thickStr = "Tebal " + t + " mm";
+                rate = t * p.d; thickStr = "Tebal Aplikasi " + t + " mm";
             } else if (p.cat === 'tb') {
                 const b = document.getElementById('bata_type').value;
                 rate = (p.n.includes('Premium')) ? (b === '10' ? 4.16 : 2.75) : (b === '10' ? 3.2 : 2.42);
-                thickStr = "Bata AAC Tebal " + b + " cm";
+                thickStr = "Bata Ringan " + b + " cm";
             } else if (p.cat === 'tile') {
                 const max = Math.max(...document.getElementById('tile_size').value.split('x').map(Number));
-                if (max <= 20) { rate = 3; trowel = "6x6 mm"; }
-                else if (max <= 40) { rate = 5; trowel = "10x10 mm"; }
-                else { rate = 7.5; trowel = "12x12 mm"; }
-                thickStr = "Ukuran " + max + "cm";
+                rate = (max <= 30) ? 4.5 : (max <= 60) ? 6.5 : 8.5;
+                thickStr = "Ukuran " + document.getElementById('tile_size').value + " cm";
             } else if (p.cat === 'nat') {
-                rate = 0.25; thickStr = "Nat 2-3mm";
-            } else if (p.cat === 'fixed') { rate = p.r; thickStr = "Topping"; }
+                rate = 0.25; thickStr = "Nat Standar 2mm";
+            } else if (p.cat === 'fixed') {
+                rate = p.r; thickStr = "Sistem Tabur";
+            }
 
             const totalKg = area * rate * 1.1;
             const totalSak = Math.ceil(totalKg / p.w);
@@ -307,15 +297,19 @@
             document.getElementById('res-area').innerText = area.toFixed(2) + " m²";
             document.getElementById('res-thick').innerText = thickStr;
             document.getElementById('res-rate').innerText = rate.toFixed(2) + " kg/m²";
-            document.getElementById('res-trowel').innerText = trowel;
             document.getElementById('res-sak').innerText = totalSak;
-            document.getElementById('res-unit').innerText = (p.w === 1) ? 'PACK' : 'SAK';
+            document.getElementById('res-unit').innerText = (p.w === 1) ? 'PACK/DUS' : 'SAK';
             document.getElementById('res-pack').innerText = p.w + " kg";
             document.getElementById('res-kg').innerText = totalKg.toFixed(1);
         }
 
         document.getElementById('date-display').innerText = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         changeProduct();
+
+        // Keamanan: Cegah Inspect Element Dasar
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) return false;
+        }
     </script>
 </body>
 </html>
