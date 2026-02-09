@@ -394,7 +394,61 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+   
+/* PATCH RESPONSIVE INDEX/DASHBOARD */
+@media screen and (max-width: 768px) {
+    /* Navbar jadi susun vertikal */
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .nav-links {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px !important;
+    }
+
+    /* Hero section (Header Utama) */
+    .hero-section {
+        padding: 40px 20px;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.8rem !important;
+    }
+
+    /* Stats Grid (Angka-angka) jadi 1 kolom */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    /* Project Grid (Riwayat Proyek) jadi 1 kolom */
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    .project-card {
+        padding: 15px !important;
+    }
+
+    /* Contact Section */
+    .contact-info p {
+        font-size: 0.9rem;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+ </style>
 </head>
 <body>
 
