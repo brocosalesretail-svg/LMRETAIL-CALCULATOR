@@ -299,7 +299,53 @@
                 align-items: flex-start;
             }
         }
-    </style>
+    
+/* PATCH RESPONSIVE PRODUK (FINAL) */
+@media screen and (max-width: 768px) {
+    /* 1. Paksa Grid Jadi 1 Kolom ke bawah */
+    .product-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 15px !important;
+        padding: 10px !important;
+    }
+
+    /* 2. Sesuaikan Kartu agar tidak terlalu lebar */
+    .product-card {
+        padding: 15px !important;
+        margin-bottom: 5px;
+    }
+
+    /* 3. Perbaikan Navigasi (agar menu tidak tumpuk di HP) */
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .nav-links {
+        gap: 10px !important;
+    }
+
+    /* 4. Perbaikan Spesifikasi (Sesuai class di file Bapak) */
+    .spec-item {
+        flex-direction: column !important; /* Label & Nilai tumpuk vertikal */
+        align-items: flex-start !important;
+        gap: 2px !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .spec-label {
+        font-size: 0.75rem;
+        color: #888;
+    }
+
+    .spec-value {
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+}
+
+</style>
 </head>
 
 
