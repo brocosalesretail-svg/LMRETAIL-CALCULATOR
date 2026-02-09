@@ -170,45 +170,71 @@
             .total-box { background: #002d5a !important; -webkit-print-color-adjust: exact; box-shadow: none; }
         }
   
-
-/* PATCH FINAL: MENGGANTIKAN SEMUA PATCH SEBELUMNYA */
+/* PATCH ANTI-TUMPUK & FULL WIDTH TOTAL */
 @media screen and (max-width: 600px) {
-    /* 1. Navbar & Logo */
-    .navbar {
-        display: flex !important;
-        flex-direction: column !important; /* Paksa tumpuk vertikal */
+    /* 1. Paksa Body dan Container mengisi seluruh lebar layar */
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important; /* Hilangkan geser kanan-kiri */
+    }
+
+    .container, .main-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        display: block !important; /* Ubah Grid jadi baris tunggal */
+    }
+
+    /* 2. Solusi Logo LeichtBric: Paksa baris sendiri */
+    .navbar, header {
+        flex-direction: column !important;
         height: auto !important;
-        padding: 15px 10px !important;
-        align-items: center !important;
+        padding: 15px 0 !important;
+        text-align: center !important;
     }
 
     .logo {
-        font-size: 1.4rem !important; /* Ukuran pas untuk HP */
-        margin: 0 0 15px 0 !important; /* Beri jarak bawah ke menu */
-        text-align: center !important;
+        font-size: 1.4rem !important;
+        margin: 0 0 15px 0 !important;
         width: 100% !important;
         display: block !important;
     }
 
-    .nav-links, .mini-nav {
-        display: flex !important;
-        flex-wrap: wrap !important; /* Baris baru jika menu tidak muat */
+    /* 3. Kotak Pengukuran & Hasil: Hilangkan space kosong di kanan */
+    .card, .input-section, .result-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        border-radius: 8px !important; /* Sedikit lengkung agar rapi */
+        box-sizing: border-box !important;
+    }
+
+    /* 4. Paksa Input Group (Panjang/Lebar) jadi 1 kolom penuh */
+    .input-group {
+        display: block !important;
+    }
+    
+    .input-group div {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    input, select {
+        width: 100% !important; /* Input box memenuhi lebar kotak */
+        font-size: 16px !important; /* Mencegah zoom otomatis iPhone */
+    }
+
+    /* 5. Navigasi bawah agar tidak tumpuk */
+    .mini-nav {
+        flex-wrap: wrap !important;
         justify-content: center !important;
         gap: 10px !important;
-        width: 100% !important;
+        padding: 10px !important;
     }
-
-    /* 2. Kartu & Grid (Untuk Produk & Kalkulator) */
-    .product-grid, .main-grid, .stats-grid, .projects-grid {
-        grid-template-columns: 1fr !important; /* Semua jadi 1 kolom */
-        display: grid !important;
-        gap: 15px !important;
-    }
-
-    /* 3. Penyesuaian Teks */
-    h1 { font-size: 1.5rem !important; text-align: center !important; }
-    .hero-section { padding: 30px 15px !important; }
 }
+
 
   </style>
 </head>
