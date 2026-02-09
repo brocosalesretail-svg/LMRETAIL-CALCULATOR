@@ -6,7 +6,62 @@
     <title>LeichtMix Pro Estimator v6.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
- .mini-nav {
+ /* PATCH RESPONSIVE KALKULATOR */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px !important;
+    }
+
+    /* Header & Navigasi */
+    header h1 { font-size: 1.4rem !important; }
+    .mini-nav {
+        justify-content: center;
+        gap: 15px;
+        font-size: 0.85rem !important;
+    }
+
+    /* Layout Utama: Input & Hasil jadi urutan atas-bawah */
+    .main-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Form Input */
+    .input-group {
+        grid-template-columns: 1fr !important; /* Panjang & Lebar jadi tumpuk */
+    }
+
+    /* Area Hasil (Result Card) */
+    .result-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .total-display {
+        flex-direction: column;
+        gap: 5px;
+        padding: 15px !important;
+    }
+
+    .big-number {
+        font-size: 3rem !important;
+    }
+}
+
+/* PATCH KHUSUS CETAK (PRINT) */
+@media print {
+    .no-print, .mini-nav, .btn-calc {
+        display: none !important;
+    }
+    body { background: white; }
+    .main-grid { display: block !important; }
+    .card { border: 1px solid #ddd; box-shadow: none !important; }
+}
+
+
+
+.mini-nav {
     max-width: 1100px;
     margin: 0 auto 15px auto;
     display: flex;
