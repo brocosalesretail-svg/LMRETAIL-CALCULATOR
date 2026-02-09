@@ -171,45 +171,51 @@
         }
   
 
-/* PATCH ANTI-BERTUMPUK (KHUSUS HP VERTIKAL) */
+/* PATCH FINAL ANTI-TUMPUK HP VERTIKAL */
 @media screen and (max-width: 480px) {
-    /* 1. Paksa Navbar jadi satu baris per elemen */
-    .navbar, header {
+    /* 1. Paksa Navbar jadi tumpuk ke bawah, bukan ke samping */
+    .navbar {
         flex-direction: column !important;
-        align-items: center !important;
-        padding: 15px 10px !important;
         height: auto !important;
+        padding: 15px 5px !important;
+        display: flex !important;
     }
 
-    /* 2. Perkecil Logo LeichtBric/LeichtMix */
-    .logo, .navbar .logo {
-        font-size: 1.3rem !important; /* Ukuran lebih kecil agar muat */
-        margin-bottom: 10px !important;
+    /* 2. Atur Logo agar punya ruang sendiri */
+    .logo {
+        font-size: 1.3rem !important;
+        margin-bottom: 15px !important; /* Beri jarak ke menu di bawahnya */
         text-align: center !important;
-        width: 100%;
+        display: block !important;
+        width: 100% !important;
+        white-space: nowrap; /* Biar tulisan tidak pecah jadi 2 baris */
     }
 
-    /* 3. Atur Menu Navigasi agar tidak tabrakan */
+    /* 3. Atur Menu Navigasi */
     .nav-links, .mini-nav {
         display: flex !important;
+        flex-wrap: wrap !important; /* Jika menu banyak, dia akan turun otomatis */
         justify-content: center !important;
-        flex-wrap: wrap !important; /* Biar kalau tidak muat, menu turun ke bawahnya */
-        gap: 12px !important;
+        gap: 10px !important;
         width: 100% !important;
+        margin: 0 !important;
     }
 
+    /* 4. Kecilkan sedikit teks menu agar muat satu baris */
     .nav-links a, .mini-nav a {
-        font-size: 0.8rem !important; /* Kecilkan sedikit teks menu */
-        padding: 5px !important;
+        font-size: 0.8rem !important;
+        padding: 5px 8px !important;
     }
 
-    /* 4. Hindari Teks Judul keluar layar */
-    h1 {
-        font-size: 1.5rem !important;
+    /* 5. Khusus Header Kalkulator agar tidak nabrak */
+    header {
+        padding: 15px 10px !important;
+    }
+    header h1 {
+        font-size: 1.2rem !important;
         text-align: center !important;
     }
 }
-
 
 
   </style>
