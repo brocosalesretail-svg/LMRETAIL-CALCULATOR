@@ -171,41 +171,44 @@
         }
   
 
-/* PATCH KHUSUS HP VERTIKAL (PORTRAIT) */
+/* PATCH ANTI-BERTUMPUK (KHUSUS HP VERTIKAL) */
 @media screen and (max-width: 480px) {
-    /* Perkecil Logo agar tidak menabrak menu */
-    .logo {
-        font-size: 1.2rem !important; /* Ukuran teks logo lebih kecil */
-        letter-spacing: 0px !important;
-        text-align: center;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    /* Atur Header agar Logo dan Menu tidak bertumpuk */
-    .navbar {
-        padding: 10px !important;
+    /* 1. Paksa Navbar jadi satu baris per elemen */
+    .navbar, header {
         flex-direction: column !important;
-        display: flex !important;
         align-items: center !important;
+        padding: 15px 10px !important;
+        height: auto !important;
     }
 
-    /* Menu navigasi agar rapi di bawah logo */
-    .nav-links, .mini-nav {
+    /* 2. Perkecil Logo LeichtBric/LeichtMix */
+    .logo, .navbar .logo {
+        font-size: 1.3rem !important; /* Ukuran lebih kecil agar muat */
+        margin-bottom: 10px !important;
+        text-align: center !important;
         width: 100%;
-        justify-content: center !important;
-        gap: 8px !important;
-        font-size: 0.7rem !important;
     }
 
-    /* Menghindari teks besar yang "memaksa" lebar layar */
+    /* 3. Atur Menu Navigasi agar tidak tabrakan */
+    .nav-links, .mini-nav {
+        display: flex !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important; /* Biar kalau tidak muat, menu turun ke bawahnya */
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    .nav-links a, .mini-nav a {
+        font-size: 0.8rem !important; /* Kecilkan sedikit teks menu */
+        padding: 5px !important;
+    }
+
+    /* 4. Hindari Teks Judul keluar layar */
     h1 {
-        font-size: 1.4rem !important;
-        line-height: 1.2 !important;
+        font-size: 1.5rem !important;
+        text-align: center !important;
     }
 }
-
-
 
 
 
